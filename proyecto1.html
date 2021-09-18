@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLAR</title>
+</head>
+<body>
+    <h1 style="text-align:center;">Bola 8</h1>
+    <hr>
+    <div style="text-align:center;padding:1em 0;"> <h4><a style="text-decoration:none;" href="https://www.zeitverschiebung.net/es/city/4014338"><span style="color:gray;">Hora actual en</span><br />Chihuahua, México</a></h4> <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=es&size=small&timezone=America%2FChihuahua" width="100%" height="90" frameborder="0" seamless></iframe> </div>
+    
+    <table border="1" style="margin: 0 auto;" class="content-table">
+        <td ><h2>Mesa 1: </h2></td><td><h2>Mesa 2: </h2></td><td><h2>Mesa 3: </h2></td></tr>
+        <tr>
+            <td>
+                <img src="imag/mesa0.jpeg" alt="mesa" id="1" width="300" height="150" onclick="cambiar(id);">
+                <p id="in1">Inicio:</p>
+                <p id="fin1">Final:</p>
+                <p id="tot1">Total:</p>
+            </td>
+            <td>
+                <img src="imag/mesa0.jpeg" alt="mesa" id="2" width="300" height="150" onclick="cambiar(id);">
+                <p id="in2">Inicio:</p>
+                <p id="fin2">Final:</p>
+                <p id="tot2">Total:</p>
+            </td>
+            
+            <td>
+                <img src="imag/mesa0.jpeg" alt="mesa" id="3" width="300" height="150" onclick="cambiar(id);">
+                <p id="in3">Inicio:</p>
+                <p id="fin3">Final:</p>
+                <p id="tot3">Total:</p>
+            </td>
+        </tr>
+        <td ><h2>Mesa 4: </h2></td><td><h2>Mesa 5: </h2></td><td><h2>Mesa 6: </h2></td></tr>
+        <tr>
+            <td>
+                <img src="imag/mesa0.jpeg" alt="mesa" id="4" width="300" height="150" onclick="cambiar(id);">
+                <p id="in4">Inicio:</p>
+                <p id="fin4">Final:</p>
+                <p id="tot4">Total:</p>
+            </td>
+            <td>
+                <img src="imag/mesa0.jpeg" alt="mesa" id="5" width="300" height="150" onclick="cambiar(id);">
+                <p id="in5">Inicio:</p>
+                <p id="fin5">Final:</p>
+                <p id="tot5">Total:</p>
+            </td>
+            <td>
+                <img src="imag/mesa0.jpeg" alt="mesa" id="6" width="300" height="150" onclick="cambiar(id);">
+                <p id="in6">Inicio:</p>
+                <p id="fin6">Final:</p>
+                <p id="tot6">Total:</p>
+            </td>
+        </tr>
+    </table>
+    <script>
+        const cambiar = tableId => {
+            let mesa = document.getElementById(tableId);
+            if(mesa.src.match("mesa0.jpeg")){
+                mesa.src = "imag/mesa.jpg";
+                time(tableId, "on");
+            }else{
+                mesa.src = "imag/mesa0.jpeg";
+                time(tableId, "off");
+            }
+        }
+        const time = (tableId, state) =>{
+            let start = document.getElementById("in" + tableId);
+            let end = document.getElementById("fin" + tableId);
+            let price = document.getElementById("tot" + tableId);
+
+            let time = new Date();
+            let hours = time.getHours();
+            let minutes = time.getMinutes();
+            let seconds = time.getSeconds();
+
+            if (hours < 10) hours = "0" + hours;
+            if (minutes < 10) minutes = "0" + minutes;
+            if (seconds < 10) seconds = "0" + seconds;
+            
+            if(state == "on"){
+                start.innerHTML = "Inicio: " + hours + ":" + minutes + ":" + seconds;
+                end.innerHTML = "Final: En uso";
+                price.innerHTML = "Total: $0";
+
+                switch (tableId){
+                    case "1":
+                        aux1 = minutes;
+                        break;
+                    case "2":
+                        aux2 = minutes;
+                        break;
+                    case "3":
+                        aux3 = minutes;
+                        break;
+                    case "4":
+                        aux4 = minutes;
+                        break;
+                    case "5":
+                        aux5 = minutes;
+                        break;
+                    case "6":
+                        aux6 = minutes;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if(state == "off"){
+                end.innerHTML = "Final: " + hours + ":" + minutes + ":" + seconds;
+                
+                let actualMinutes = parseInt(minutes);
+
+                switch (tableId){
+                    case "1":
+                        if (actualMinutes < parseInt(aux1)) {
+                            actualMinutes += 60;
+                        }
+                        cost = (actualMinutes - parseInt(aux1));
+                        break;
+                    case "2":
+                        if (actualMinutes < parseInt(aux2)) {
+                            actualMinutes += 60;
+                        }
+                        cost = (actualMinutes - parseInt(aux2));
+                        break;
+                    case "3":
+                        if (actualMinutes < parseInt(aux3)) {
+                            actualMinutes += 60;
+                        }
+                        cost = (actualMinutes - parseInt(aux3));
+                        break;
+                    case "4":
+                        if (actualMinutes < parseInt(aux4)) {
+                            actualMinutes += 60;
+                        }
+                        cost = (actualMinutes - parseInt(aux4));
+                        break;
+                    case "5":
+                        if (actualMinutes < parseInt(aux5)) {
+                            actualMinutes += 60;
+                        }
+                        cost = (actualMinutes - parseInt(aux5));
+                        break;
+                    case "6":
+                        if (actualMinutes < parseInt(aux6)) {
+                            actualMinutes += 60;
+                        }
+                        cost = (actualMinutes - parseInt(aux6));
+                        break;
+                    default:
+                        break;
+                }
+
+                cost *= (50/60);    
+                cost = Math.round(cost);   
+                price.innerHTML = "Total: $" + cost;
+
+            }
+    }
+        
+    </script>
+</body>
+</html>
